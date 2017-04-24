@@ -1,4 +1,4 @@
-angular.module('carfin', [
+angular.module('primeiraApp', [
   'ui.router',
   'ngAnimate',
   'toastr'
