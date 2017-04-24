@@ -1,4 +1,4 @@
-angular.module('primeiraApp', [
+angular.module('pedidorapido', [
   'ui.router',
   'ngAnimate',
   'toastr'
