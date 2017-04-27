@@ -1,37 +1,10 @@
 <content-header name="Dashboard" small="V 1.0"></content-header>
 
-<section class="content">
-  <div class="col-xs-4">
-    <div class="small-box bg-green">
-      <div class="inner">
-          <h3>R$ 10</h3>
-          <p>Total de Vendas</p>
-      </div>
-        <div class="icon">
-          <i class="fa fa-bank"></i>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-4">
-      <div class="small-box bg-red">
-        <div class="inner">
-            <h3>R$ 10</h3>
-            <p>Total de Debitos</p>
-        </div>
-          <div class="icon">
-            <i class="fa fa-credit-card"></i>
-          </div>
-        </div>
-      </div>
-      <div class="col-xs-4">
-        <div class="small-box bg-blue">
-          <div class="inner">
-              <h3>R$ 10</h3>
-              <p>Total Consolidado</p>
-          </div>
-            <div class="icon">
-              <i class="fa fa-money"></i>
-            </div>
-          </div>
-        </div>
+<section class="content" ng-controller="DashboardCtrl as dashboard">
+  <value-box grid="4" color-Class="bg-green" icon-class="fa fa-bank"
+    value="R$ {{ credit | number:2 }}" text="Total de Creditos"></value-box>
+  <value-box grid="4" color-Class="bg-red" icon-class="fa fa-credit-card"
+    value="R$ {{ debt | number:2 }}" text="Total de Debitos"></value-box>
+  <value-box grid="4" color-Class="bg-blue" icon-class="fa fa-money"
+    value="R$ {{ total | number: 2 }}" text="Total de Consolidado"></value-box>
 </section>
