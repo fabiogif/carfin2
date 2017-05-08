@@ -13,7 +13,7 @@
 
             vm.refresh = function(){
               $http.get(url).then(function(response){
-                vm.billingCycle = {}
+                vm.billingCycle = {credits:[{}], debts:[{}]}
                 vm.billingCycles = response.data
                 tabs.show(vm, {tabList: true, tabCreate: true})
               })
@@ -21,10 +21,8 @@
           vm.create = function(){
                 $http.post(url, vm.billingCycle).then(function(response){
                     vm.refresh()
-                      //vm.billingCycles = response
                     msgs.addSuccess('Operação realizada com sucesso')
-
-                }).catch(function(response){
+                  }).catch(function(response){
                   msgs.addError(response.data.errors)
                 })
 
@@ -37,6 +35,17 @@
               vm.billingCycle = billingCycle
               tabs.show(vm, {tabDelete: true})
             }
+
+            vm.update = function(){
+              const updateUrl = `${url}/${vm.billingCycle._id}`
+              $http.put(updateUrl, vm.billingCycle).then(function(response){
+              vm.refresh()
+              msgs.addSuccess('Operação realizada com sucesso!')
+            }).catch(function(response){
+              msgs.addError(response.data.errors)
+              })
+            }
+
             vm.delete = function(){
               const deleteUrl = `${url}/${vm.billingCycle._id}`
               $http.delete(deleteUrl, vm.billingCycle).then(function(response){

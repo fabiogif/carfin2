@@ -7,13 +7,14 @@ bindings:{
     placeholder: '@',
     type: '@',
     model: '=',
+    readonly: '<',
   },
   controller:[
     'gridSystem',
     function(gridSystem){
       this.$onInit = function(){
         this.gridClasses = gridSystem.toCssClasses(this.grid)
-        } 
+        }
     }
 
   ],
@@ -22,7 +23,7 @@ bindings:{
     <div class="form-group">
       <label for="{{ $ctrl.id }}">{{ $ctrl.label }}</label>
       <input id="{{ $ctrl.id }}" class="form-control" placeholder="{{ $ctrl.placeholder }}"
-      type="{{ $ctrl.type }}" ng-model="$ctrl.model"/>
+      type="{{ $ctrl.type }}" ng-model="$ctrl.model" ng-readonly="$ctrl.readonly"/>
    </div>
  </div>
 `
