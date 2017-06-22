@@ -3,8 +3,10 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt') 
 const User = require('./user') 
 const env = require('../../.env')
+
 const emailRegex = /\S+@\S+\.\S+/
 const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,12})/
+
 const sendErrorsFromDB = (res, dbErrors) => {
     const errors = []
     _.forIn(dbErrors.errors, error => errors.push(error.message)) 
@@ -14,6 +16,7 @@ const sendErrorsFromDB = (res, dbErrors) => {
 const login = (req, res, next) => {
     const email = req.body.email || ''
     const password = req.body.password || ''
+
     User.findOne({ email }, (err, user) => {
         if (err) {
             return sendErrorsFromDB(res, err)
@@ -35,16 +38,18 @@ const validateToken = (req, res, next) => {
         return res.status(200).send({ valid: !err })
     })
 }
+
 const signup = (req, res, next) => {
     const name = req.body.name || ''
     const email = req.body.email || ''
     const password = req.body.password || ''
     const confirmPassword = req.body.confirm_password || ''
+
     if (!email.match(emailRegex)) {
         return res.status(400).send({
             errors: ['O e-mail informado está inválido']}) }
-if(!password.match(passwordRegex)) { return res.status(400).send({
-            errors: [
+    if(!password.match(passwordRegex)) { 
+        return res.status(400).send({errors: [
                 "Senha precisar ter: uma letra maiúscula, uma letra minúscula, um n úmero, uma caractere especial(@#$%) e tamanho entre 6-12."
             ]
         })
@@ -54,6 +59,7 @@ if(!password.match(passwordRegex)) { return res.status(400).send({
          if(!bcrypt.compareSync(confirmPassword, passwordHash)) {
             return res.status(400).send({ errors: ['Senhas não conferem.'] })
         }
+
         User.findOne({ email }, (err, user) => {
             if (err) {
                 return sendErrorsFromDB(res, err)
@@ -63,7 +69,7 @@ if(!password.match(passwordRegex)) { return res.status(400).send({
                 const newUser = new User({ name, email, password: passwordHash })
                  newUser.save(err => {
                     if (err) {
-                        return sendErrorsFromDB(res, err)
+                            return sendErrorsFromDB(res, err)
                     } else {
                         login(req, res, next)
                     }
